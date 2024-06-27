@@ -1,48 +1,74 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Multiplication and Division Calculator</title>
+    <title>Date and Time Display</title>
     <script>
-      function multiplyBy() {
-        num1 = document.getElementById("firstNumber").value;
-        num2 = document.getElementById("secondNumber").value;
-        document.getElementById("result").innerHTML = num1 * num2;
+      function displayDate() {
+        // Get the current date
+        let currentDate = new Date();
+
+        // Array of month names
+        let monthNames = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        // Format the date as "DD Month YYYY"
+        let dateFormatted = `${currentDate.getDate()} ${
+          monthNames[currentDate.getMonth()]
+        } ${currentDate.getFullYear()}`;
+
+        // Display the formatted date
+        document.getElementById("dateResult").innerHTML =
+          "Date: " + dateFormatted;
       }
 
-      function divideBy() {
-        num1 = document.getElementById("firstNumber").value;
-        num2 = document.getElementById("secondNumber").value;
-        document.getElementById("result").innerHTML = num1 / num2;
+      function displayTime() {
+        // Get the current time
+        let currentTime = new Date();
+
+        // Get the day, month, date, year, hours, minutes, and seconds
+        let day = currentTime.toLocaleDateString("en-US", { weekday: "short" });
+        let month = currentTime.toLocaleDateString("en-US", { month: "short" });
+        let date = currentTime.getDate();
+        let year = currentTime.getFullYear();
+        let hours = currentTime.getHours();
+        let minutes = currentTime.getMinutes();
+        let seconds = currentTime.getSeconds();
+        let timeZoneOffset = currentTime.getTimezoneOffset();
+
+        // Calculate the GMT offset in hours and minutes
+        let gmtHours = Math.abs(Math.floor(timeZoneOffset / 60));
+        let gmtMinutes = Math.abs(timeZoneOffset % 60);
+
+        // Determine the GMT sign (plus or minus)
+        let gmtSign = timeZoneOffset >= 0 ? "-" : "+";
+
+        // Format the time
+        let timeFormatted = `${day} ${month} ${date} ${year} ${hours}:${minutes}:${seconds} GMT${gmtSign}${gmtHours}:${gmtMinutes} (India Standard Time)`;
+
+        // Display the formatted time
+        document.getElementById("timeResult").innerHTML =
+          "Time: " + timeFormatted;
       }
     </script>
   </head>
   <body>
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <meta charset="utf-8" />
-        <title>
-          JavaScript program to calculate multiplication and division of two
-          numbers
-        </title>
-        <style type="text/css">
-          body {
-            margin: 30px;
-          }
-        </style>
-      </head>
-      <body>
-        <form>
-          1st Number : <input type="text" id="firstNumber" /><br />
-          2nd Number: <input type="text" id="secondNumber" /><br />
-          <input type="button" onClick="multiplyBy()" value="Multiply" />
-          <input type="button" onClick="divideBy()" value="Divide" />
-        </form>
-        <p>
-          The Result is : <br />
-          <span id="result"></span>
-        </p>
-      </body>
-    </html>
+    <h1>Date and Time Display</h1>
+    <button onclick="displayDate()">Show Date</button>
+    <p id="dateResult"></p>
+    <br />
+    <button onclick="displayTime()">Show Time</button>
+    <p id="timeResult"></p>
   </body>
 </html>
